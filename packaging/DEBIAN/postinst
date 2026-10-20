@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+# Inicia o app em segundo plano para o usuário que rodou o sudo.
+if [ -n "$SUDO_USER" ]; then
+  UID_U=$(id -u "$SUDO_USER")
+  if [ -S "/run/user/$UID_U/bus" ]; then
+    # encerra versão antiga, se estiver aberta
+    sudo -u "$SUDO_USER" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$UID_U/bus" \
+      DISPLAY="${DISPLAY:-:0}" /usr/bin/zoomdraw exit >/dev/null 2>&1 || true
+    sleep 1
+    sudo -u "$SUDO_USER" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$UID_U/bus" \
+      DISPLAY="${DISPLAY:-:0}" /usr/bin/zoomdraw || true
+  fi
+fi
+exit 0

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=ZoomDraw (segundo plano)
+Exec=zoomdraw
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
